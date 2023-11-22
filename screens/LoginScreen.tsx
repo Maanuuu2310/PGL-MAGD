@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import appColors from "../assets/styles/appColors";
 
@@ -17,6 +17,15 @@ const LoginScreen = () => {
         placeholderTextColor="white"
         style={styles.loginInputStyle}
       ></TextInput>
+
+      <Pressable
+        accessibilityLabel="BotonLogin"
+        //onPress={}
+        style={styles.logInStyle}
+      >
+        <Text style={styles.logInTextStyle}>Log In</Text>
+      </Pressable>
+      <Text style={styles.passwordMessageStyle}>Olvide mi contraseña</Text>
     </View>
   );
 };
@@ -43,5 +52,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 15,
     color: "white",
+  },
+
+  logInStyle: {
+    backgroundColor: appColors.secondary,
+    height: 45,
+    width: "90%",
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.44,
+    shadowRadius: 10.32,
+    elevation: 16,
+    marginVertical: 15,
+  },
+
+  logInTextStyle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
+  },
+
+  passwordMessageStyle: {
+    fontSize: 16,
+    color: appColors.primary,
+    textAlign: "right",
+    paddingHorizontal: 45,
+    marginVertical: 10,
   },
 });
