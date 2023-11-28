@@ -15,16 +15,20 @@ const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
   const drawerNavigatorScreenOptions: DrawerNavigationOptions = {
     headerStyle: {
-      backgroundColor: appColors.primary,
+      backgroundColor: appColors.colorFondo,
     },
-    headerTintColor: appColors.white,
+    headerTintColor: appColors.colorTexto,
     drawerItemStyle: {
-      width: "100%",
+      width: "90%",
     },
-    drawerActiveTintColor: appColors.white,
-    drawerActiveBackgroundColor: appColors.primary,
-    drawerInactiveTintColor: "lightgray",
-    drawerInactiveBackgroundColor: appColors.secondary,
+
+    drawerStyle: {
+      backgroundColor: appColors.colorBotones,
+    },
+    drawerActiveTintColor: appColors.colorTexto,
+    drawerActiveBackgroundColor: appColors.colorActivo,
+    drawerInactiveTintColor: "lightgray", // letras
+    drawerInactiveBackgroundColor: appColors.colorInactivo, // los cuadros
     drawerType: "slide",
   };
 

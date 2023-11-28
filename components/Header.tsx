@@ -23,7 +23,7 @@ export default Header;
 const styles = StyleSheet.create({
   headerContainer: {
     paddingTop: 45,
-    backgroundColor: appColors.primary,
+    backgroundColor: appColors.colorFondo,
     width: "100%",
     paddingVertical: 10,
     borderColor: "black",

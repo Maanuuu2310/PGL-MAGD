@@ -1,61 +1,97 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useContext, useState } from "react";
 import appColors from "../assets/styles/appColors";
+import { RenderCardListContext } from "../context/RenderCardListContext";
+import RenderCardListProvider from "../providers/RenderCardListProvider";
 
 const LoginScreen = () => {
+  const [inputUser, setInputUser] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
+
+  let { toggleIsListRendered, setUserName } = useContext(RenderCardListContext);
+
+  const handleChangeUser = (text: string) => {
+    setInputUser(text);
+  };
+
+  const handleChangePassword = (text: string) => {
+    setInputPassword(text);
+  };
+
+  const handleLogin = () => {
+    let user = {
+      nombre: "Manuel",
+      password: "2310",
+    };
+    if (inputUser == user.nombre && inputPassword == user.password) {
+      console.log("login correcto");
+      setUserName(inputUser);
+      toggleIsListRendered();
+    } else {
+      console.log("login fallido");
+      console.log(inputUser, user.nombre, inputPassword, user.password);
+    }
+  };
+
   return (
-    <View>
-      <Text style={styles.loginTextStyle}>Inicia Sesion</Text>
-      <Text style={styles.loginMessageStyle}>Bienvenido</Text>
+    <View style={styles.container}>
+      <Text style={styles.loginMessage}>Inicia Sesion</Text>
+      <Text style={styles.welcomeMessage}>Bienvenido</Text>
       <TextInput
         placeholder="Usuario"
         placeholderTextColor="white"
         style={styles.loginInputStyle}
+        onChangeText={handleChangeUser}
       ></TextInput>
       <TextInput
         placeholder="Contraseña"
-        placeholderTextColor="white"
+        placeholderTextColor={appColors.colorTexto}
         style={styles.loginInputStyle}
+        onChangeText={handleChangePassword}
       ></TextInput>
 
       <Pressable
         accessibilityLabel="BotonLogin"
-        //onPress={}
-        style={styles.logInStyle}
+        onPress={() => handleLogin()}
+        style={styles.loginBotton}
       >
         <Text style={styles.logInTextStyle}>Log In</Text>
       </Pressable>
-      <Text style={styles.passwordMessageStyle}>Olvide mi contraseña</Text>
+      <Text style={styles.passwordMessage}>Olvide mi contraseña</Text>
     </View>
   );
 };
-
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  loginTextStyle: {
+  loginMessage: {
     fontSize: 40,
-    color: appColors.primary,
+    color: appColors.colorTexto,
+    marginTop: "-20%",
   },
-  loginMessageStyle: {
+  welcomeMessage: {
     fontSize: 20,
-    color: appColors.primary,
+    color: appColors.colorTexto,
+    margin: 10,
   },
 
   loginInputStyle: {
-    backgroundColor: appColors.primary,
+    borderColor: appColors.colorFondo,
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderRadius: 8,
     height: 40,
     width: "90%",
-    opacity: 0.5,
+    opacity: 0.8,
     marginVertical: 10,
     fontWeight: "bold",
     paddingHorizontal: 15,
     fontSize: 15,
-    color: "white",
+    color: appColors.colorTexto,
   },
 
-  logInStyle: {
-    backgroundColor: appColors.secondary,
+  loginBotton: {
+    backgroundColor: appColors.colorFondo,
     height: 45,
     width: "90%",
     borderRadius: 10,
@@ -74,11 +110,18 @@ const styles = StyleSheet.create({
     color: "white",
   },
 
-  passwordMessageStyle: {
+  passwordMessage: {
     fontSize: 16,
-    color: appColors.primary,
-    textAlign: "right",
-    paddingHorizontal: 45,
+    color: appColors.colorTexto,
+    alignSelf: "flex-end",
+    paddingHorizontal: 25,
     marginVertical: 10,
+  },
+
+  container: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: appColors.colorBotones,
   },
 });

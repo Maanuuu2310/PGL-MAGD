@@ -7,7 +7,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Bienvenida</Text>
       <Image
-        source={require("../assets/pepo.jpg")}
+        source={require("../assets/pepo.png")}
         style={styles.image}
       ></Image>
       <Pressable
@@ -28,9 +28,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
+    backgroundColor: appColors.colorBotones,
   },
   boton: {
-    backgroundColor: appColors.secondary,
+    backgroundColor: appColors.colorFondo,
     color: "white",
     width: "50%",
     height: "9%",
@@ -47,12 +48,12 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "white",
+    color: appColors.colorTexto,
   },
 
   welcomeText: {
     fontSize: 40,
-    color: appColors.primary,
+    color: appColors.colorTexto,
     marginTop: "-20%",
   },
 

@@ -3,15 +3,18 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+import RenderCardListProvider from "./providers/RenderCardListProvider";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Header></Header>
-      <NavigationContainer>
-        <Drawer></Drawer>
-      </NavigationContainer>
-      <StatusBar style="auto" />
+      <RenderCardListProvider>
+        <Header></Header>
+        <NavigationContainer>
+          <Drawer></Drawer>
+        </NavigationContainer>
+        <StatusBar style="auto" />
+      </RenderCardListProvider>
     </View>
   );
 }
