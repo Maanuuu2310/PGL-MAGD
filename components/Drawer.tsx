@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import {
   DrawerNavigationOptions,
   createDrawerNavigator,
@@ -9,6 +9,7 @@ import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import appColors from "../assets/styles/appColors";
+import { RenderCardListContext } from "../context/RenderCardListContext";
 
 const Drawer = createDrawerNavigator();
 
@@ -32,7 +33,9 @@ const CustomDrawer = () => {
     drawerType: "slide",
   };
 
-  return (
+  let { isListRendered } = useContext(RenderCardListContext);
+
+  return isListRendered ? (
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={drawerNavigatorScreenOptions}
@@ -43,6 +46,17 @@ const CustomDrawer = () => {
         options={{ title: "Home" }}
       />
       <Drawer.Screen name="Login" component={LoginScreen} />
+    </Drawer.Navigator>
+  ) : (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      screenOptions={drawerNavigatorScreenOptions}
+    >
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: "Home" }}
+      />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
   );

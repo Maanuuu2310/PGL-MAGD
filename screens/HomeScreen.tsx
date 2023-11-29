@@ -1,9 +1,12 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import appColors from "../assets/styles/appColors";
+import { RenderCardListContext } from "../context/RenderCardListContext";
+import LoginScreen from "./LoginScreen";
 
 const HomeScreen = () => {
-  return (
+  let { userName, isListRendered } = useContext(RenderCardListContext);
+  return isListRendered ? (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Bienvenida</Text>
       <Image
@@ -12,11 +15,20 @@ const HomeScreen = () => {
       ></Image>
       <Pressable
         accessibilityLabel="BotonLogin"
-        //onPress={}
+        // onPress={() => LoginScreen()}
         style={styles.boton}
       >
         <Text style={styles.loginText}>Entrar</Text>
       </Pressable>
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>Bienvenida</Text>
+      <Text style={styles.usertext}>{userName}</Text>
+      <Image
+        source={require("../assets/pepo.png")}
+        style={styles.image}
+      ></Image>
     </View>
   );
 };
@@ -55,6 +67,11 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: appColors.colorTexto,
     marginTop: "-20%",
+  },
+
+  usertext: {
+    fontSize: 35,
+    color: appColors.colorTexto,
   },
 
   image: {},

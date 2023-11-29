@@ -1,6 +1,6 @@
 const appColors = {
   colorFondo: "#FFCB77", // color del fondo
-  colorBotones: "#80776A", // color botones
+  colorBotones: "#80776A", // color sec
   colorTexto: "#FFFFFF", // color
   colorInactivo: "#A79985",
   colorActivo: "#FFBB4E",
