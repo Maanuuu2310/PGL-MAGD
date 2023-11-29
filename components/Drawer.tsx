@@ -7,7 +7,7 @@ import {
 import CustomHeader from "./Header";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import SettingsScreen from "../screens/PortfolioScreen";
 import appColors from "../assets/styles/appColors";
 import { RenderCardListContext } from "../context/RenderCardListContext";
 
@@ -57,7 +57,7 @@ const CustomDrawer = () => {
         component={HomeScreen}
         options={{ title: "Home" }}
       />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Drawer.Screen name="Portfolio" component={SettingsScreen} />
     </Drawer.Navigator>
   );
 };

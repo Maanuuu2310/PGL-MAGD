@@ -1,11 +1,14 @@
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
 import InfoContainer from "../components/InfoContainer";
 import appColors from "../assets/styles/appColors";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Description from "../components/Description";
 
 export default function App() {
-  const [displayMyQR] = useState(true);
   const [changeColor] = useState(false);
+
+  const Tab = createMaterialTopTabNavigator();
 
   return (
     <View style={changeColor ? styles.containerDark : styles.container}>

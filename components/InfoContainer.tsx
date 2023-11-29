@@ -1,8 +1,6 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import Description from "../components/Description";
 import HobbiesList from "../components/HobbiesList";
-import appColors from "../assets/styles/appColors";
 
 const InfoContainer = () => {
   return (

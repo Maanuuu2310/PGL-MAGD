@@ -3,9 +3,18 @@ import React, { useContext } from "react";
 import appColors from "../assets/styles/appColors";
 import { RenderCardListContext } from "../context/RenderCardListContext";
 import LoginScreen from "./LoginScreen";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
-const HomeScreen = () => {
+const HomeScreen = ({
+  navigation,
+}: {
+  navigation: NavigationProp<ParamListBase>;
+}) => {
   let { userName, isListRendered } = useContext(RenderCardListContext);
+
+  const loginScreen = () => {
+    navigation.navigate("Login");
+  };
   return isListRendered ? (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Bienvenida</Text>
@@ -15,7 +24,7 @@ const HomeScreen = () => {
       ></Image>
       <Pressable
         accessibilityLabel="BotonLogin"
-        // onPress={() => LoginScreen()}
+        onPress={() => loginScreen()}
         style={styles.boton}
       >
         <Text style={styles.loginText}>Entrar</Text>
