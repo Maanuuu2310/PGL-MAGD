@@ -10,6 +10,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SettingsScreen from "../screens/PortfolioScreen";
 import appColors from "../assets/styles/appColors";
 import { RenderCardListContext } from "../context/RenderCardListContext";
+import LogoutScreen from "../screens/LogoutScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -58,6 +59,7 @@ const CustomDrawer = () => {
         options={{ title: "Home" }}
       />
       <Drawer.Screen name="Portfolio" component={SettingsScreen} />
+      <Drawer.Screen name="Cerrar Sesion" component={LogoutScreen} />
     </Drawer.Navigator>
   );
 };
