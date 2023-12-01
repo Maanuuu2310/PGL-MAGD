@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import appColors from "../assets/styles/appColors";
 import { RenderCardListContext } from "../context/RenderCardListContext";
 import RenderCardListProvider from "../providers/RenderCardListProvider";
+import users from "../interfaces/users";
 
 const LoginScreen = () => {
   const [inputUser, setInputUser] = useState("");
@@ -19,17 +20,20 @@ const LoginScreen = () => {
   };
 
   const handleLogin = () => {
-    let user = {
-      nombre: "Manuel",
-      password: "2310",
-    };
-    if (inputUser == user.nombre && inputPassword == user.password) {
-      console.log("login correcto");
-      setUserName(inputUser);
-      toggleIsListRendered();
-    } else {
-      console.log("login fallido");
-      console.log(inputUser, user.nombre, inputPassword, user.password);
+    let usuarios = false;
+    for (let index = 0; index < users.length; index++) {
+      if (
+        inputUser === users[index].nombre &&
+        inputPassword === users[index].password
+      ) {
+        setUserName(inputUser);
+        toggleIsListRendered();
+        usuarios = true;
+        alert("Inicio se sesion Correcto");
+      }
+    }
+    if (usuarios === false) {
+      alert("Inicio de sesion incorrecto");
     }
   };
 
@@ -125,3 +129,16 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.colorBotones,
   },
 });
+
+// let user = {
+//   nombre: "Manuel",
+//   password: "2310",
+// };
+// if (inputUser == user.nombre && inputPassword == user.password) {
+//   console.log("login correcto");
+//   setUserName(inputUser);
+//   toggleIsListRendered();
+// } else {
+//   console.log("login fallido");
+//   console.log(inputUser, user.nombre, inputPassword, user.password);
+// }
