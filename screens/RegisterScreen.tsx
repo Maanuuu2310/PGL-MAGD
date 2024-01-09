@@ -22,11 +22,12 @@ const RegisterScreen = () => {
     setInputMail(text);
   };
 
-  const handleLogin = () => {
-    let usuarios = false;
-    if (usuarios === false) {
-      alert("Inicio de sesion incorrecto");
-    }
+  const handleRegister = () => {
+    const users = {
+      nombre: inputUser,
+      mail: inputMail,
+      password: inputPassword,
+    };
   };
 
   return (
@@ -54,7 +55,7 @@ const RegisterScreen = () => {
 
       <Pressable
         accessibilityLabel="BotonLogin"
-        onPress={() => handleLogin()}
+        onPress={() => handleRegister()}
         style={styles.loginBotton}
       >
         <Text style={styles.logInTextStyle}>Register</Text>
