@@ -1,4 +1,4 @@
-const USERS_API_URL = "http://172.16.102.33:8888/users";
+const USERS_API_URL = "http://172.16.100.218:8888/users";
 const REGISTER_PATH = "/register";
 const LOGIN_PATH = "/login";
 
@@ -7,6 +7,11 @@ type UserJsonResponse = {
   name: string;
   email: string;
   hashedPwd: string;
+};
+
+type CookiesJson = {
+  username: string;
+  codigoSalida: number;
 };
 
 const getInitRequest = (httpVerb: string, body: {}): RequestInit => {
@@ -21,18 +26,20 @@ const getInitRequest = (httpVerb: string, body: {}): RequestInit => {
   return init;
 };
 
-export const registerUsers = async (user: {}): Promise<string> => {
-  let users: string = "";
+export const registerUsers = async (user: {}): Promise<CookiesJson> => {
+  let userCookies = {
+    username: "",
+    codigoSalida: 0,
+  };
 
   const request: RequestInfo = `${USERS_API_URL}${REGISTER_PATH}`;
   const response = await fetch(request, getInitRequest("POST", user));
   const json: UserJsonResponse = await response.json();
 
-  console.log(response.status);
-  console.log(json);
+  userCookies.codigoSalida = response.status;
   if (json != null) {
-    users = json.name;
+    userCookies.username = json.name;
   }
 
-  return users;
+  return userCookies;
 };

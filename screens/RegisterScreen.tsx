@@ -30,25 +30,19 @@ const RegisterScreen = () => {
     setInputMail(text);
   };
 
-  const handleRegister = () => {
-    let usuario = {};
-    if (
-      inputUser != null &&
-      inputUser != "" &&
-      inputPassword != null &&
-      inputPassword != "" &&
-      inputMail != null &&
-      inputMail != ""
-    ) {
-      usuario = {
-        name: inputUser,
-        email: inputMail,
-        password: inputPassword,
-      };
-      console.log(usuario);
+  const handleRegister = async () => {
+    let usuario = {
+      name: inputUser,
+      email: inputMail,
+      password: inputPassword,
+    };
+    if ((await registerUsers(usuario)).codigoSalida == 201) {
       registerUsers(usuario);
-    } else {
-      Alert.alert("ERROR", "faltan datos");
+      toggleIsListRendered();
+      setUserName(usuario.name);
+    } else if ((await registerUsers(usuario)).codigoSalida == 400) {
+      let errorCode = (await registerUsers(usuario)).codigoSalida;
+      Alert.alert(errorCode.toString(), "faltan datos o hay datos incorrectos");
     }
   };
 
