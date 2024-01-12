@@ -1,8 +1,16 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useContext, useState } from "react";
 import appColors from "../assets/styles/appColors";
 import { RenderCardListContext } from "../context/RenderCardListContext";
 import users from "../interfaces/users";
+import { registerUsers } from "../services/userServices";
 
 const RegisterScreen = () => {
   const [inputUser, setInputUser] = useState("");
@@ -23,11 +31,25 @@ const RegisterScreen = () => {
   };
 
   const handleRegister = () => {
-    const users = {
-      nombre: inputUser,
-      mail: inputMail,
-      password: inputPassword,
-    };
+    let usuario = {};
+    if (
+      inputUser != null &&
+      inputUser != "" &&
+      inputPassword != null &&
+      inputPassword != "" &&
+      inputMail != null &&
+      inputMail != ""
+    ) {
+      usuario = {
+        name: inputUser,
+        email: inputMail,
+        password: inputPassword,
+      };
+      console.log(usuario);
+      registerUsers(usuario);
+    } else {
+      Alert.alert("ERROR", "faltan datos");
+    }
   };
 
   return (
