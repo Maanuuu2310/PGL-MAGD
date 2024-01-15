@@ -36,6 +36,11 @@ const RegisterScreen = () => {
       email: inputMail,
       password: inputPassword,
     };
+
+    if (inputUser == "" || inputMail == "" || inputPassword == "") {
+      return Alert.alert("Error", "hay campos vacios");
+    }
+
     if ((await registerUsers(usuario)).codigoSalida == 201) {
       registerUsers(usuario);
       toggleIsListRendered();
