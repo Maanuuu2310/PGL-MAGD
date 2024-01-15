@@ -43,3 +43,18 @@ export const registerUsers = async (user: {}): Promise<CookiesJson> => {
 
   return userCookies;
 };
+
+export const loginUser = async (user: {}): Promise<number> => {
+  let users: string = "";
+
+  const request: RequestInfo = `${USERS_API_URL}${LOGIN_PATH}`;
+  const response = await fetch(request, getInitRequest("POST", user));
+  const json: UserJsonResponse = await response.json();
+
+  console.log(response.status);
+  if (json != null) {
+    users = json.name;
+  }
+
+  return response.status;
+};

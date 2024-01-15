@@ -4,6 +4,7 @@ import appColors from "../assets/styles/appColors";
 import { RenderCardListContext } from "../context/RenderCardListContext";
 import RenderCardListProvider from "../providers/RenderCardListProvider";
 import users from "../interfaces/users";
+import { loginUser } from "../services/userServices";
 
 const LoginScreen = () => {
   const [inputUser, setInputUser] = useState("");
@@ -19,22 +20,33 @@ const LoginScreen = () => {
     setInputPassword(text);
   };
 
-  const handleLogin = () => {
-    let usuarios = false;
-    for (let index = 0; index < users.length; index++) {
-      if (
-        inputUser === users[index].nombre &&
-        inputPassword === users[index].password
-      ) {
-        setUserName(inputUser);
-        toggleIsListRendered();
-        usuarios = true;
-        alert("Inicio se sesion Correcto");
-      }
-    }
-    if (usuarios === false) {
+  const handleLogin = async () => {
+    let user = {
+      name: inputUser,
+      password: inputPassword,
+    };
+    if ((await loginUser(user)) == 200) {
+      toggleIsListRendered();
+      setUserName(user.name);
+      alert("Inicio se sesion Correcto");
+    } else {
       alert("Inicio de sesion incorrecto");
     }
+    // let usuarios = false;
+    // for (let index = 0; index < users.length; index++) {
+    //   if (
+    //     inputUser === users[index].nombre &&
+    //     inputPassword === users[index].password
+    //   ) {
+    //     setUserName(inputUser);
+    //     toggleIsListRendered();
+    //     usuarios = true;
+    //     alert("Inicio se sesion Correcto");
+    //   }
+    // }
+    // if (usuarios === false) {
+    //   alert("Inicio de sesion incorrecto");
+    // }
   };
 
   return (
