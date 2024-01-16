@@ -28,7 +28,7 @@ const LoginScreen = () => {
     if ((await loginUser(user)) == 200) {
       toggleIsListRendered();
       setUserName(user.name);
-      alert("Inicio se sesion Correcto");
+      alert("Inicio de sesion Correcto");
     } else {
       alert("Inicio de sesion incorrecto");
     }
