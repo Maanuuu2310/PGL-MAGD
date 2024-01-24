@@ -1,15 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Button,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Audio } from "expo-av";
 import appColors from "../assets/styles/appColors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const STORAGE_KEY = "recordings";
 
 interface RecordingLine {
   sound: any;
@@ -21,13 +16,33 @@ export default function App() {
   const [recording, setRecording] = useState<any>();
   const [recordings, setRecordings] = useState<RecordingLine[]>([]);
   const [message, setMessage] = useState<string>("");
-  const isMounted = useRef(true);
 
   useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
+    loadRecordings();
   }, []);
+
+  async function saveRecordings(records: RecordingLine[]) {
+    try {
+      const recordingsJson = JSON.stringify(records);
+      await AsyncStorage.setItem(STORAGE_KEY, recordingsJson);
+    } catch (error) {
+      console.error("Error al guardar las grabaciones", error);
+    }
+  }
+
+  const loadRecordings = async () => {
+    try {
+      console.log("cargando...");
+      const recordingsJson = await AsyncStorage.getItem(STORAGE_KEY);
+      console.log("cargado");
+      if (recordingsJson) {
+        const loadedRecordings: RecordingLine[] = JSON.parse(recordingsJson);
+        setRecordings(loadedRecordings);
+      }
+    } catch (error) {
+      console.error("Error al cargar las grabaciones", error);
+    }
+  };
 
   async function startRecording() {
     try {
@@ -45,10 +60,10 @@ export default function App() {
 
         setRecording(recording);
       } else {
-        setMessage("Please grant permission to app to access microphone");
+        setMessage("Por favor acepte los permisos totales al microfono");
       }
     } catch (err) {
-      console.error("Failed to start recording", err);
+      console.error("fallo al iniciar la grabación", err);
     }
   }
 
@@ -64,9 +79,8 @@ export default function App() {
       file: recording.getURI(),
     });
 
-    if (isMounted.current) {
-      setRecordings(updatedRecordings);
-    }
+    setRecordings(updatedRecordings);
+    saveRecordings(updatedRecordings);
   }
 
   function getDurationFormatted(millis: number) {
@@ -75,6 +89,12 @@ export default function App() {
     const seconds = Math.round((minutes - minutesDisplay) * 60);
     const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
     return `${minutesDisplay}:${secondsDisplay}`;
+  }
+
+  function handleDeletePress(index: number) {
+    const updatedRecordings = [...recordings];
+    updatedRecordings.splice(index, 1);
+    setRecordings(updatedRecordings);
   }
 
   function getRecordingLines() {
@@ -92,7 +112,7 @@ export default function App() {
           </Pressable>
           <Pressable
             style={styles.botonDelete}
-            onPress={() => recordingLine.sound.replayAsync()}
+            onPress={() => handleDeletePress(index)}
           >
             <Text style={styles.playText}>Delete</Text>
           </Pressable>
@@ -111,7 +131,7 @@ export default function App() {
         >
           <Text style={styles.loginText}>
             {" "}
-            {recording ? "Pausar Grabacion" : "Iniciar Grabacion"}
+            {recording ? "Pausar Grabacion 🛑 " : "Iniciar Grabacion 🗣️ "}
           </Text>
         </Pressable>
       </View>
@@ -199,82 +219,3 @@ const styles = StyleSheet.create({
     color: appColors.colorTexto,
   },
 });
-
-// import { Pressable, StyleSheet, Text, View } from "react-native";
-// import React, { useState } from "react";
-// import appColors from "../assets/styles/appColors";
-
-// const RecordingScreen = () => {
-//   const [isRecording, setIsRecording] = useState(false);
-
-//   const grabacion = () => {
-//     setIsRecording(!isRecording);
-//   };
-
-//   return isRecording ? (
-//     <View style={styles.container}>
-//       <Pressable
-//         accessibilityLabel="BotonLogin"
-//         style={styles.boton}
-//         onPress={grabacion}
-//       >
-//         <Text style={styles.loginText}>Iniciar Grabación</Text>
-//       </Pressable>
-//     </View>
-//   ) : (
-//     <View style={styles.container}>
-//       <Pressable
-//         accessibilityLabel="BotonLogin"
-//         style={styles.boton}
-//         onPress={grabacion}
-//       >
-//         <Text style={styles.loginText}>Parar Grabación</Text>
-//       </Pressable>
-//     </View>
-//   );
-// };
-
-// export default RecordingScreen;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     alignItems: "flex-start",
-//     flexDirection: "row",
-//     flex: 1,
-//     justifyContent: "center",
-//     backgroundColor: appColors.colorBotones,
-//   },
-//   boton: {
-//     backgroundColor: appColors.colorFondo,
-//     color: "white",
-//     width: "50%",
-//     height: "9%",
-//     borderRadius: 20,
-//     alignItems: "center",
-//     paddingVertical: "5%",
-//     marginVertical: "10%",
-//     shadowColor: "#000",
-//     shadowOpacity: 0.44,
-//     shadowRadius: 10.32,
-//     elevation: 16,
-//   },
-
-//   loginText: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     color: appColors.colorTexto,
-//   },
-
-//   welcomeText: {
-//     fontSize: 40,
-//     color: appColors.colorTexto,
-//     marginTop: "-20%",
-//   },
-
-//   usertext: {
-//     fontSize: 35,
-//     color: appColors.colorTexto,
-//   },
-
-//   image: {},
-// });
