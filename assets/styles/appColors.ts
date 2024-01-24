@@ -6,6 +6,8 @@ const appColors = {
   colorActivo: "#FFBB4E",
   greenNeon: "#42f548",
   redNeon: "#d9270f",
+  colorBotonPlay: "#90EE71",
+  coloorBotonDelete: "#FF7878",
 };
 
 export default appColors;
